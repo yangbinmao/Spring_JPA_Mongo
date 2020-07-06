@@ -296,6 +296,10 @@ public class mongoTemplateTest {
 		}
 	}
 
+
+	/**
+	 * 分页加排序
+	 */
 	@Test
 	public void findPage2(){
 		Pageable page= PageRequest.of(1,2, Sort.Direction.ASC,"baseid");
