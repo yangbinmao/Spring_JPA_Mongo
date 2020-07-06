@@ -7,6 +7,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -292,6 +295,20 @@ public class mongoTemplateTest {
 			log.info(user.toString());
 		}
 	}
+
+	@Test
+	public void findPage2(){
+		Pageable page= PageRequest.of(1,2, Sort.Direction.ASC,"baseid");
+		Query query1 = new Query();
+		Query with = query1.with(page);
+		List<User> users = mongoTemplate.find(query1, User.class);
+		for (User user : users) {
+			System.out.println("user = " + user);
+		}
+		
+	}
+
+
 	/**
 	 * 	得到某个实体类在mongo库中的表名
 	 */

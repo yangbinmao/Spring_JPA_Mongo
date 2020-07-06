@@ -11,7 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import ybm.MySpringBootApplication;
+import ybm.document.People;
 import ybm.document.User;
+import ybm.reponsitory.PeopleReponsitory;
 import ybm.reponsitory.UserReponsitory;
 
 import java.util.List;
@@ -101,4 +103,41 @@ public class MongoReponsitory {
             log.info(user.toString());
         }
     }
+
+
+
+
+    @Autowired
+    PeopleReponsitory peopleReponsitory;
+
+    @Test
+    public void findPeopleById(){
+        People people = peopleReponsitory.save(new People("杨彬茂", 12));
+        System.out.println("people = " + people);
+        Optional<People> optPeople = peopleReponsitory.findById(people.getId());
+        System.out.println(optPeople.isPresent());
+        if (optPeople.isPresent()){
+
+            System.out.println(optPeople.get().toString());
+        }
+    }
+
+    @Test
+    public void updatePeopleById(){
+        People people = peopleReponsitory.save(new People("杨彬茂", 13));
+        System.out.println("people = " + people);
+        Optional<People> optPeople = peopleReponsitory.findById(people.getId());
+        System.out.println(optPeople.isPresent());
+        if (optPeople.isPresent()){
+            System.out.println(optPeople.get().toString());
+        }
+        people.setName("瓜娃子");
+
+        People updatePeopel = peopleReponsitory.save(people);
+        System.out.println(updatePeopel.toString());
+        String s = people.getId().toString();
+        System.out.println(s);
+    }
+
+
 }
